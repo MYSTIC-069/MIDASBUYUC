@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Receiver</title></head>
+<body>
+<video id="video" autoplay controls></video>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAbVcW1a4l9BhP00z2LZI5NS8LirXtN5q4",
+    authDomain: "midasbuyuc-d8593.firebaseapp.com",
+    projectId: "midasbuyuc-d8593",
+    storageBucket: "midasbuyuc-d8593.firebasestorage.app",
+    messagingSenderId: "508011523129",
+    appId: "1:508011523129:web:52a5f2ab2ca41b40d2b1e8"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const video = document.getElementById('video');
+
+  onValue(ref(db, 'stream'), (snapshot) => {
+    const data = snapshot.val();
+    if (data && data.data) {
+      video.src = data.data;
+    }
+  });
+</script>
+</body>
+</html>
